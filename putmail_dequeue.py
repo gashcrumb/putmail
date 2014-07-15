@@ -68,7 +68,7 @@ for msgfn in files:
 		except (IOError, OSError):
 			print _("[%s] Message NOT deleted! Fix queue!") % msgbn
 
-	except (IOError, OSError):
+	except (Exception, IOError, OSError):
 		print _("[%s] Message NOT sent.") % msgbn
 
 	total += 1

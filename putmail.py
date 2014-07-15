@@ -306,22 +306,23 @@ configPath = os.path.join(configPath, theConfigFilename) # finally
 
 if not os.path.exists(configPath):
 	# Config file not present, try to create one and exit
-	force_print(ERROR_CONFIG_NONEXISTANT % configPath)
-	force_print(WARNING_SAMPLE_CONFIG)
+	force_print("No config file for outgoing address, exiting"); 
+	#force_print(ERROR_CONFIG_NONEXISTANT % configPath)
+	#force_print(WARNING_SAMPLE_CONFIG)
 
-	try:
-		dirname = os.path.dirname(configPath)
-		if not os.path.isdir(dirname):
-			os.makedirs(dirname)
-		file(configPath, "w").write(DEFAULT_CONFIG)
-	except:
-		exit_forcing_print(ERROR_CONFIG_CREATE)
+	#try:
+	#	dirname = os.path.dirname(configPath)
+	#	if not os.path.isdir(dirname):
+	#		os.makedirs(dirname)
+	#	file(configPath, "w").write(DEFAULT_CONFIG)
+	#except:
+	#	exit_forcing_print(ERROR_CONFIG_CREATE)
 
 	sys.exit(EXIT_FAILURE)
 
 # Last check. If we cannot read this we cannot proceed.
 if not os.access(configPath, os.R_OK):
-	exit_forcing_print(ERROR_CONFIG_UNREADABLE)
+	exit_forcing_print("No config file for outgoing address, exiting")
 
 ### Read the file ###
 
@@ -329,7 +330,7 @@ config = ConfigParser.ConfigParser()
 try:
 	config.read([configPath])
 except:
-	exit_forcing_print(ERROR_CONFIG_PARSE)
+	exit_forcing_print("No config file for outgoing address, exiting")
 
 ### Check conditions for bad configurations ###
 
@@ -342,7 +343,7 @@ if (not config.has_section(CONFIG_SECTION) or
 		 ((config.has_option(CONFIG_SECTION, OPTION_PASSWORD) or
 			 config.has_option(CONFIG_SECTION, OPTION_KEYCHAIN)) and not
 			 config.has_option(CONFIG_SECTION, OPTION_LOGIN))):
-	exit_forcing_print(ERROR_CONFIG_PARSE)
+	exit_forcing_print("No config file for outgoing address, exiting")
 
 ### Extract the necessary configuration parameters ##
 
